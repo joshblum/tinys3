@@ -142,6 +142,35 @@ conn.upload('my_awesome_key.zip',f,bucket='sample_bucket',
 
 For more information, see [Amazon's S3 Documentation](http://docs.aws.amazon.com/AmazonS3/latest/API/RESTObjectPUT.html)
 
+Gettting files from S3
+---------------------
+
+Downloading a single file:
+
+```python
+import tinys3
+
+# Creating a simple connection
+conn = tinys3.Connection(S3_ACCESS_KEY, S3_SECRET_KEY)
+
+# Get a single file
+r = conn.get('some_file.zip', 'my_bucket') # requests response object
+```
+
+Save the blob contents:
+
+```python
+import tinys3
+
+# Creating a simple connection
+conn = tinys3.Connection(S3_ACCESS_KEY, S3_SECRET_KEY)
+
+# Get a single file and save to `dst_filename`
+filename = conn.get('some_file.zip', 'my_bucket', dst_filename='foo')
+with open(filename) as f:
+    f.read()
+```
+
 
 Copy keys inside/between buckets
 --------------------------------

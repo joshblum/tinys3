@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import os
 import unittest
 from flexmock import flexmock
 from tinys3.request_factory import CopyRequest, S3Request, UpdateMetadataRequest, DeleteRequest, GetRequest
@@ -76,6 +77,27 @@ class TestNonUploadRequests(unittest.TestCase):
                                              auth=self.conn.auth).and_return(self._mock_response()).once()
 
         r.run()
+
+    def test_get_with_dst_filename(self):
+        """
+        Test the generation of a get request
+        """
+
+        r = GetRequest(self.conn, 'key_to_get', 'bucket', dst_filename='foo')
+
+        mock = self._mock_adapter(r)
+        mock_res = flexmock(
+            raise_for_status=lambda: None,
+            iter_lines=lambda: iter(['foo', 'bar', 'baz']),
+            )
+
+        mock.should_receive('get').with_args('https://s3.amazonaws.com/bucket/key_to_get',
+                                             auth=self.conn.auth).and_return(mock_res).once()
+
+        filename = r.run()
+        self.assertTrue(os.path.isfile(filename))
+        os.remove(filename)
+
 
     def test_update_metadata(self):
         """

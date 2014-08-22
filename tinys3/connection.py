@@ -50,7 +50,7 @@ class Base(object):
 
         return b
 
-    def get(self, key, bucket=None):
+    def get(self, key, bucket=None, dst_filename=None):
         """
         Get a key from a bucket
 

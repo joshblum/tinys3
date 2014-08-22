@@ -45,16 +45,23 @@ class S3Request(object):
 
 
 class GetRequest(S3Request):
-    def __init__(self, conn, key, bucket):
+    def __init__(self, conn, key, bucket, dst_filename=None):
         super(GetRequest, self).__init__(conn)
         self.key = key
         self.bucket = bucket
+        self.dst_filename = dst_filename
 
     def run(self):
         url = self.bucket_url(self.key, self.bucket)
         r = self.adapter().get(url, auth=self.auth)
 
         r.raise_for_status()
+        if self.dst_filename is not None:
+          with open(self.dst_filename, 'w') as f:
+            for line in r.iter_lines():
+              f.write(line)
+            return f.name
+
 
         return r
 

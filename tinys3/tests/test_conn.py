@@ -8,7 +8,6 @@ from flexmock import flexmock
 TEST_SECRET_KEY = 'TEST_SECRET_KEY'
 TEST_ACCESS_KEY = 'TEST_ACCESS_KEY'
 TEST_BUCKET = 'bucket'
-TEST_DATA = 'test test test' * 2
 
 
 class TestConn(unittest.TestCase):
