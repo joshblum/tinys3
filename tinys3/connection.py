@@ -50,7 +50,7 @@ class Base(object):
 
         return b
 
-    def get(self, key, bucket=None, stream=False):
+    def get(self, key, bucket=None, dst_filename=None, stream=False):
         """
         Get a key from a bucket
 
@@ -68,7 +68,7 @@ class Base(object):
         >>> conn.get('my_awesome_key.zip','sample_bucket')
 
         """
-        r = GetRequest(self, key, self.bucket(bucket), stream=stream)
+        r = GetRequest(self, key, self.bucket(bucket), dst_filename=dst_filename, stream=stream)
 
         return self.run(r)
 
