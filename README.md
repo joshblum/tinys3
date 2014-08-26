@@ -155,6 +155,8 @@ conn = tinys3.Connection(S3_ACCESS_KEY, S3_SECRET_KEY)
 
 # Get a single file
 r = conn.get('some_file.zip', 'my_bucket') # requests response object
+
+r = conn.get('some_file.zip', 'my_bucket', stream=True) # optionally stream the response
 ```
 
 Save the blob contents:
