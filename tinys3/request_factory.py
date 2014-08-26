@@ -45,14 +45,15 @@ class S3Request(object):
 
 
 class GetRequest(S3Request):
-    def __init__(self, conn, key, bucket):
+    def __init__(self, conn, key, bucket, stream):
         super(GetRequest, self).__init__(conn)
         self.key = key
         self.bucket = bucket
+        self.stream = stream
 
     def run(self):
         url = self.bucket_url(self.key, self.bucket)
-        r = self.adapter().get(url, auth=self.auth)
+        r = self.adapter().get(url, auth=self.auth, stream=self.stream)
 
         r.raise_for_status()
 
